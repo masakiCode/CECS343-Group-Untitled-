@@ -68,7 +68,7 @@ void draw()
   
   if(round == 0)
   {
-    fill(0, 255, 0);
+    fill(0, 128, 255);
     textSize(100);
     text("Warning!", (width/3)+100 , height/4);
     textSize(60);
