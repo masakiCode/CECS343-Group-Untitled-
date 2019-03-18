@@ -135,5 +135,5 @@ class Spot
          stroke(0);
          rect(x, y, w, h);
      }
-   }
+   }   
 }
