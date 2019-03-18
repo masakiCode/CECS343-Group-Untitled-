@@ -346,6 +346,7 @@ void keyPressed()
            board[i][j].clean();
            game = 0;
            sLeft = 9;
+           turns = 0;
         }
       }
     }
