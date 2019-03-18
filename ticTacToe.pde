@@ -1,27 +1,28 @@
 PImage img;
- 
-final int imgWidth=275;
-final int imgHeight=275;
 
-Spot[][] board;
+Spot[][] board = new Spot[3][3];
 int col = 3;
 int row = 3;
 int turns = 0; 
 int player = 0;//player = -0, computer = 1
-int full = 9;
+int sLeft = 9;
 float first;
-
+int round = 0;
 
 void setup()
 {
-  size(900, 900);
-  makeBoard();
-  first = random(0, 100);
+  size(2100, 1400);
+  smooth();
+  for(int i = 0; i < col;i++)
+  {
+    for(int j = 0; j < row;j++)
+    {
+        board[i][j] = new Spot(i*(width/3), j*(height/3), width/3, height/3);
+    }
+  }
   
-  textAlign(CENTER,CENTER);
-  fill(255,0,0);
-  textSize(28);
- 
+  //makeBoard();
+  first = random(0, 100);
   // Load image from a web server
   img = loadImage("Ximg.png");
   
@@ -35,48 +36,34 @@ void setup()
       player = 0;
       first = 1;
     }
+    
+    
+    
  
 }
 
 void draw()
 {
-  /*if(mouseX > 0 && mouseX < 300 && mouseY > 0 && mouseY < 300 && mousePressed)
-  {
-    
-  }*/
+  background(0);
+  background(255);
+  fill(255);
   
-  
- 
-  //Detects click only if inside image
-  if(mousePressed==true && mouseX<imgWidth && mouseY<imgHeight)
+  for(int i = 0; i < col;i++)
   {
-      image(img,10,10, imgWidth,imgHeight);
-      text("Clicked!",imgWidth/2,imgHeight/2);
+    for(int j = 0; j < row;j++)
+    {
+      board[i][j].display();
+    } 
   }
 }
 
-
-
-void makeBoard()
+void mousePressed()
 {
-  background(255);
-  noStroke();
-  stroke(0);
-  strokeWeight(7);
-  /*line(300, 0, 300, height);
-  line(0, 300, width, 300);
-  line(600, 0, 600, height);
-  line(0, 600, width, 600);*/
-  //noStroke();
-  stroke(0);
-  rect(0, 0, 300, 300);
-  rect(300, 0, 300, 300);
-  rect(600, 0, 300, 300);
-  rect(0, 300, 300, 300);
-  rect(300, 300, 300, 300);
-  rect(600, 300, 300, 300);
-  rect(0, 600, 300, 300);
-  rect(300, 600, 300, 300);
-  rect(600, 600, 300, 300);
-  
+   for(int i = 0; i < col;i++)
+  {
+    for(int j = 0; j < row;j++)
+    {
+      board[i][j].pick(mouseX, mouseY);
+    } 
+  } 
 }
