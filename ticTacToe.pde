@@ -3,8 +3,7 @@ Spot[] difficulty = new Spot[3];
 int col = 3;
 int row = 3;
 int turns = 0; 
-int player = 0; //player = 0
-int AI = 1; //computer = 1
+int player = 0; //player = 0 //computer = 1
 int sLeft = 9;
 float first;
 int round = 0;
@@ -53,14 +52,12 @@ void setup()
   
     if(first >= 50) //Above 50, computer first
     {
-      AI = 0;
       player = 1;
       pTurn = false;
     }
     else // else, player first
     {
       player = 0;
-      AI = 1;
       pTurn = true;
     }
 }
@@ -109,6 +106,8 @@ void draw()
   if(round == 2)
   {
     checkBoard();
+    if(game == 0 && sLeft > 0)
+    {
     fill(255);
     for(int i = 0; i < col;i++)
     {
@@ -133,6 +132,27 @@ void draw()
         }
       }
     }
+    }
+    if(game != 0)
+    { 
+       printW();
+    }
+    else if(game == 2)
+    {
+    
+    printW();
+  }
+  
+  if(game == 1 || game == 2)
+  {
+    
+    printW();
+  }
+  
+  if(game == 0 && sLeft == 0)
+  {
+    printW();
+  }    
   }
   
   //How to Play
@@ -174,15 +194,15 @@ void draw()
 
 void mousePressed()
 {
-  if(round == 2)
+  if(round == 2 && sLeft != 0)
   {
    for(int i = 0; i < col;i++)
   {
     for(int j = 0; j < row;j++)
     {
-      board[i][j].pick(mouseX, mouseY);
       if(board[i][j].chosen == 0 && mouseX > board[i][j].x && mouseX < board[i][j].x+board[i][j].w && mouseY > board[i][j].y && mouseY < board[i][j].y+board[i][j].h)
       {
+         board[i][j].pick(mouseX, mouseY);
          pTurn = false;
       }
     } 
@@ -205,8 +225,7 @@ void mousePressed()
 }
 
 void checkBoard()
-{
-  
+{ 
   //Check rows and cols
   for(int i = 0; i < 3; i++)
   {
@@ -254,31 +273,47 @@ void checkBoard()
 
 void printW()
 {
-  fill(255);
-  stroke(0);
-  rect(0, 0, width, height);
-  textSize(50);
-  
-  if(game == 1)
+    fill(0);
+    stroke(0);
+    textSize(50);
+ if(game == 1)
   { 
-    text("X wins the game!", width/2, height/2);
+    
+    fill(0);
+    stroke(0);
+    textSize(50);
+    text("X wins the game!\n"+"Turns: "+turns, width/3 + 100, height/3);
+    
+    
   }
   else if(game == 2)
   {
-    text("O wins the game!", width/2, height/2);
+    
+    fill(0);
+    stroke(0);
+    textSize(50);
+    text("O wins the game!\n"+"Turns: "+turns, width/3 + 100, height/3);
+    
   }
   
   if(game == 1 || game == 2)
   {
-    textSize(75);
-    text("Press Enter to play again or Space to go back", width/3, height-100);
+    
+    fill(0);
+    stroke(0);
+    textSize(50);
+    text("Press Enter to play again or Space to go back", width/4, height-100);
   }
   
   if(game == 0 && sLeft == 0)
   {
-    textSize(75);
-    text("Press Enter to play again or Space to go back", width/3, height-100);
-  }    
+    
+    fill(0);
+    stroke(0);
+    textSize(50);
+    text("It's a tie game!", width/3 + 100, height/3);
+    text("Press Enter to play again or Space to go back", width/4 - 50, height-100);
+  }     
 }
 
 void keyPressed()
@@ -297,6 +332,7 @@ void keyPressed()
            board[i][j].clean();
            game = 0;
            sLeft = 9;
+           turns = 0;
         }
       }
     }
@@ -327,6 +363,7 @@ void keyPressed()
            board[i][j].clean();
            game = 0;
            sLeft = 9;
+           turns = 0;
         }
       }
     }
@@ -341,6 +378,7 @@ void keyPressed()
            board[i][j].clean();
            game = 0;
            sLeft = 9;
+           turns = 0;
         }
       }
     }
