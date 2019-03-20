@@ -5,13 +5,10 @@ int row = 3;
 int turns = 0; 
 int player = 0; //player = 0 //computer = 1
 int sLeft = 9;
-float first;
+float first;    //random
 int round = 0;
-int level = 9;
-Spot start;
-Spot hTp;
-Spot diff;
-Spot q;
+int level = 9;  //Difficulty Choices
+Spot start, hTp, diff, q;
 boolean pTurn;
 int game = 0;
 
@@ -19,6 +16,8 @@ void setup()
 {
   size(1920, 1080);
   smooth();
+  
+  //Board made of spots
   for(int i = 0; i < col;i++)
   {
     difficulty[i] = new Spot(width/3, i*(height/3)+25, width/4, height/4);
@@ -40,24 +39,20 @@ void setup()
   diff = new Spot(width/8, (height-height/3)-100, width/3, height/3-100);
   q = new Spot((width-width/3)-240, (height-height/3)-100, width/3, height/3-100);
   
+  //Main Menu buttons
   start.setChosen(5);
   hTp.setChosen(6);
   diff.setChosen(7);
   q.setChosen(8);
   
-  //makeBoard();
-  first = random(0, 100);
-  // Load image from a web server
-  //img = loadImage("Ximg.png");
+    first = random(0, 100);
   
     if(first >= 50) //Above 50, computer first
     {
-      player = 1;
       pTurn = false;
     }
     else // else, player first
     {
-      player = 0;
       pTurn = true;
     }
 }
@@ -66,6 +61,9 @@ void draw()
 {
   background(255);
   
+  
+  
+  //WARNING screen
   if(round == 0)
   {
     fill(0, 128, 255);
@@ -98,13 +96,18 @@ void draw()
     text("New Game", start.x+150, start.y+150);
     text("How To Play", hTp.x+150, hTp.y+150);
     text("Difficulty", diff.x+150, diff.y+150);
-    text("Exit", q.x+250, q.y+150);
-    
+    text("Exit", q.x+250, q.y+150); 
   }
   
-  //First round starts
+  //Game starts
   if(round == 2)
   {
+    //X is always first
+    if(sLeft == 9)
+    {
+      player = 0;
+    }
+    
     checkBoard();
     if(game == 0 && sLeft > 0)
     {
@@ -116,6 +119,8 @@ void draw()
         board[i][j].display();
       } 
     }
+    
+    //Easy AI picks random spot that's not taken
     if(!pTurn)
     {
       int r = (int)random(0, width);
@@ -126,13 +131,14 @@ void draw()
         {
           if(board[i][j].chosen == 0 && r > board[i][j].x && r < board[i][j].x+board[i][j].w && c > board[i][j].y && c < board[i][j].y+board[i][j].h)
           {
-            board[i][j].pick(r, c);
-            pTurn = true;
+              board[i][j].pick(r, c);
+              pTurn = true;
           }
         }
       }
-    }
-    }
+    } 
+  }
+    //Print win screen
     if(game != 0)
     { 
        printW();
@@ -165,9 +171,9 @@ void draw()
     text("The objective of this game is to get three in a row.", (width/2)-width/3, height/3); 
     text("The board you play on is 3x3. The first player is", (width/2)-width/3, (height/3)+100);
     text("named X, the second is O. Players will take turns", (width/2)-width/3 , (height/3)+200);
-    text("to play the game, until all spaces are filled or", (width/2)-width/3 , (height/3)+300);
-    text("one of the players win. Your opponent for this", (width/2)-width/3 , (height/3)+400);
-    text("game can be either a person or AI with set difficulty", (width/2)-width/3 , (height/3)+500);
+    text("to play the game, until all spaces are filled or one", (width/2)-width/3 , (height/3)+300);
+    text("of the players win. Your opponent for this game", (width/2)-width/3 , (height/3)+400);
+    text("can be either a person or AI with set difficulty Enjoy!", (width/2)-width/3 , (height/3)+500);
     text("Press Space to go back", width/3 ,height-100);
     
     if(keyPressed && key == ' ')
@@ -176,6 +182,7 @@ void draw()
     }
   }
   
+  //Difficulty Selection
   if(round == 4)
   {
     fill(255);
@@ -194,7 +201,7 @@ void draw()
 
 void mousePressed()
 {
-  if(round == 2 && sLeft != 0)
+  if(round == 2 && sLeft != 0 && game == 0)
   {
    for(int i = 0; i < col;i++)
   {
@@ -202,7 +209,7 @@ void mousePressed()
     {
       if(board[i][j].chosen == 0 && mouseX > board[i][j].x && mouseX < board[i][j].x+board[i][j].w && mouseY > board[i][j].y && mouseY < board[i][j].y+board[i][j].h)
       {
-         board[i][j].pick(mouseX, mouseY);
+         board[i][j].pick(mouseX, mouseY);   
          pTurn = false;
       }
     } 
@@ -278,22 +285,42 @@ void printW()
     textSize(50);
  if(game == 1)
   { 
-    
-    fill(0);
-    stroke(0);
-    textSize(50);
-    text("X wins the game!\n"+"Turns: "+turns, width/3 + 100, height/3);
-    
+    //Winner with # of turns Player/AI for X
+    if(pTurn == true)
+    {
+      fill(0);
+      stroke(0);
+      textSize(50);
+      text("Can you try a little \nharder next game?\n"+"AI won in "+turns+" turns", width/3 + 100, height/3);
+    }
+    else
+    {
+      fill(0);
+      stroke(0);
+      textSize(50);
+      text("Player X wins the game!\n"+"Turns: "+turns, width/3 + 100, height/3);
+    }
     
   }
   else if(game == 2)
   {
     
-    fill(0);
-    stroke(0);
-    textSize(50);
-    text("O wins the game!\n"+"Turns: "+turns, width/3 + 100, height/3);
+    //Winner with # of turns Player/AI for X
+    if(pTurn == true)
+    {
+      fill(0);
+      stroke(0);
+      textSize(50);
+      text("Can you try a little \nharder next game?\n"+"AI won in "+turns+" turns", width/3 + 100, height/3);
+    }
     
+    else
+    {
+      fill(0);
+      stroke(0);
+      textSize(50);
+      text("Player O wins the game!\n"+"Turns: "+turns, width/3 + 100, height/3);
+    }
   }
   
   if(game == 1 || game == 2)
@@ -302,7 +329,7 @@ void printW()
     fill(0);
     stroke(0);
     textSize(50);
-    text("Press Enter to play again or Space to go back", width/4, height-100);
+    text("Press Enter to play again, Space to go back, or e to exit!", (width/4) - 150, height-100);
   }
   
   if(game == 0 && sLeft == 0)
@@ -312,14 +339,14 @@ void printW()
     stroke(0);
     textSize(50);
     text("It's a tie game!", width/3 + 100, height/3);
-    text("Press Enter to play again or Space to go back", width/4 - 50, height-100);
+    text("Press Enter to play again, Space to go back, or e to exit!", (width/4) - 150, height-100);
   }     
 }
 
 void keyPressed()
 {
   
-  
+  //Reset Game
   if(round == 2 && game == 0 && sLeft == 0)
   {
     if(key == ENTER)
@@ -335,6 +362,7 @@ void keyPressed()
            turns = 0;
         }
       }
+      first = random(0, 100);
     }
     else if(key == ' ' && keyPressed)
     {
@@ -346,9 +374,13 @@ void keyPressed()
            board[i][j].clean();
            game = 0;
            sLeft = 9;
-           turns = 0;
         }
       }
+      first = random(0, 100);
+    }
+    else if(key == 'e' || key == 'E' && keyPressed)
+    {
+      exit();
     }
   }
   
@@ -367,6 +399,8 @@ void keyPressed()
            turns = 0;
         }
       }
+      
+      first = random(0, 100);
     }
     
     else if(key == ' ' && keyPressed)
@@ -382,6 +416,11 @@ void keyPressed()
            turns = 0;
         }
       }
+      first = random(0, 100);
+    }
+    else if(key == 'e' || key == 'E' && keyPressed)
+    {
+      exit();
     }
   }
 }
