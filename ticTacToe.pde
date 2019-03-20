@@ -28,12 +28,6 @@ void setup()
     }
   }
   
-  
-  /*start = new Spot(width/3+100, 0, width/4, height/4-100);
-  hTp = new Spot(width/3+100, height/4 , width/4, height/4-100);
-  diff = new Spot(width/3+100, height/4 + height/4, width/4, height/4-100);
-  q = new Spot(width/3+100, height/4 + height/2, width/4, height/4-100);*/
-  
   start = new Spot(width/8, 100, width/3, height/3-100);
   hTp = new Spot((width - width/3)-240, 100 , width/3, height/3-100);
   diff = new Spot(width/8, (height-height/3)-100, width/3, height/3-100);
@@ -60,8 +54,6 @@ void setup()
 void draw()
 {
   background(255);
-  
-  
   
   //WARNING screen
   if(round == 0)
@@ -121,8 +113,10 @@ void draw()
     }
     
     //Easy AI picks random spot that's not taken
+    //Skeleton for the future tic tac toe stragtegy
     if(!pTurn)
     {
+      //if(Easy){
       int r = (int)random(0, width);
       int c = (int)random(0, height);
       for(int i = 0; i < col;i++)
@@ -136,7 +130,17 @@ void draw()
           }
         }
       }
+      //else if("Medium")
+      //{
+        
+      //}
+      //else if("Hard")
+      //{
+        
+      //}
     } 
+    
+    
   }
     //Print win screen
     if(game != 0)
