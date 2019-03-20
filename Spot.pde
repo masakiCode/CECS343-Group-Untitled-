@@ -10,6 +10,7 @@ class Spot
    PImage xImg = loadImage("crab.jpg");
    PImage oImg = loadImage("bHole.jpg");
    
+   
    Spot(int newX, int newY, int newW, int newH)
    {
       x = newX;
@@ -24,7 +25,8 @@ class Spot
        {
         
          //X turn
-        if (player == 0 && chosen == 0) {
+        if (player == 0 && chosen == 0) 
+        {
           chosen = 1;
           player = 1;
           turns++;
@@ -32,13 +34,14 @@ class Spot
         } 
         
         //O turn
-        else if (player == 1 && chosen == 0) {
-          chosen = 2;
-          player = 0;
-          turns++;
-          sLeft--;       
-        }
-      } 
+        else if (player == 1 && chosen == 0) 
+        {
+            chosen = 2;
+            player = 0;
+            turns++;
+            sLeft--;   
+         }
+       }
     }
    
    void decide(int cX, int cY)
@@ -64,41 +67,46 @@ class Spot
        }
    }
    
+   //Used for the future AI tic tac toe strategy
    void setDiff(int cX, int cY)
    {
        if (cX > x && cX < x+w && cY > y && cY < y+h) 
        {
            if(chosen == 9)
            {
+             dif = "Easy";
              round = 1;
            }
            
            if(chosen == 10)
            {
+             dif = "Medium";
              round = 1;
            }
            
            if(chosen == 11)
            {
+             dif = "Hard";
              round = 1;
            }
-         
        }
    }
    
+   //Cleans the spot of choices
    void clean()
    {
       chosen = 0; 
    }
    
+   //Set chosen
    void setChosen(int newChosen)
    {
     chosen = newChosen; 
    }
    
+   //Display Button/Spot
    void display()
    {
-     //img = loadImage("Ximg.png");
      
      if(round == 2)
      {
@@ -108,15 +116,14 @@ class Spot
      stroke(0);
      rect(x, y, w, h);
      
-     if(chosen == 1)
-     {
-       image(xImg, x, y, w, h);
-     }
-     else if(chosen == 2)
-     {
-       image(oImg,x, y, w, h);
-     }
-     
+       if(chosen == 1)
+       {
+           image(xImg, x, y, w, h);
+       }
+       else if(chosen == 2)
+       {
+           image(oImg,x, y, w, h);
+       }
      }
      if(round == 1)
      {
@@ -135,5 +142,5 @@ class Spot
          stroke(0);
          rect(x, y, w, h);
      }
-   }   
-}
+   }
+ }  
