@@ -1,5 +1,3 @@
-
-
 class Spot
 {
    int x;
@@ -7,8 +5,8 @@ class Spot
    int w;
    int h; 
    int chosen = 0;
-   PImage xImg = loadImage("crab.jpg");
-   PImage oImg = loadImage("bHole.jpg");
+   PImage xImg = loadImage("Ximg.png");
+   PImage oImg = loadImage("Oimg.png");
    
    
    Spot(int newX, int newY, int newW, int newH)
@@ -72,6 +70,7 @@ class Spot
    {
        if (cX > x && cX < x+w && cY > y && cY < y+h) 
        {
+           String dif;
            if(chosen == 9)
            {
              dif = "Easy";
@@ -143,4 +142,4 @@ class Spot
          rect(x, y, w, h);
      }
    }
- }  
+ } 
