@@ -1,5 +1,11 @@
+import ddf.minim.*;
+
+PImage img;
+Minim minim;
+
 Spot[][] board = new Spot[3][3];
 Spot[] difficulty = new Spot[3];
+String dif = "Easy";
 int col = 3;
 int row = 3;
 int turns = 0; 
@@ -11,12 +17,18 @@ int level = 9;  //Difficulty Choices
 Spot start, hTp, diff, q;
 boolean pTurn;
 int game = 0;
+int dx = 0;
+AudioSample v;
+AudioSample lose;
 
 void setup()
 {
+  minim = new Minim(this);
+  v = minim.loadSample("victory.mp3");
+  lose = minim.loadSample("wrong.wav", 2048);
   size(1920, 1080);
   smooth();
-  
+  img = loadImage("warn.png");
   //Board made of spots
   for(int i = 0; i < col;i++)
   {
@@ -28,12 +40,12 @@ void setup()
     }
   }
   
-  start = new Spot(width/8, 100, width/3, height/3-100);
-  hTp = new Spot((width - width/3)-240, 100 , width/3, height/3-100);
-  diff = new Spot(width/8, (height-height/3)-100, width/3, height/3-100);
-  q = new Spot((width-width/3)-240, (height-height/3)-100, width/3, height/3-100);
+  start = new Spot(width/8, 100+125, width/3, height/3-100);
+  hTp = new Spot((width - width/3)-240, 100+125 , width/3, height/3-100);
+  diff = new Spot(width/8, ((height-height/3)-100)+75, width/3, height/3-100);
+  q = new Spot((width-width/3)-240, ((height-height/3)-100)+75, width/3, height/3-100);
   
-  //Main Menu buttons
+  //Main Menu buttons//
   start.setChosen(5);
   hTp.setChosen(6);
   diff.setChosen(7);
@@ -49,6 +61,7 @@ void setup()
     {
       pTurn = true;
     }
+    
 }
 
 void draw()
@@ -58,25 +71,38 @@ void draw()
   //WARNING screen
   if(round == 0)
   {
-    fill(0, 128, 255);
-    textSize(100);
-    text("Warning!", (width/3)+100 , height/4);
-    textSize(60);
-    text("The brightness of your computer screen may", (width/2)-width/3, height/3); 
-    text("cause minor eye strain during long play sessions", (width/2)-width/3, (height/3)+100);
-    text("Dim the brightness of your computer for more ", (width/2)-width/3 , (height/3)+200);
-    text("fun and reduced eye strain. Thank You, Enjoy!", (width/2)-width/3 , (height/3)+300);
-    text("Press Space to continue", width/3 ,height-100);
+      fill(255, 0, 0);
+      textSize(100);
+      //(width/3)+100
+      //textAlign(CENTER);
+      text("Warning! Warning! Warning!", dx, height/4);
+      dx+=7;
+      if(width < (dx))
+      {
+        textAlign(LEFT);
+        dx = -1400;
+      }
+      image(img, 850, 0, 200, 150);
+      
+      fill(0, 128, 255);
+      textSize(60);
+      text("The brightness of your computer screen may", (width/2)-width/3, height/3); 
+      text("cause minor eye strain during long play sessions", (width/2)-width/3, (height/3)+100);
+      text("Dim the brightness of your computer for more ", (width/2)-width/3 , (height/3)+200);
+      text("fun and reduced eye strain. Thank You, Enjoy!", (width/2)-width/3 , (height/3)+300);
+      text("Press Space to continue", width/3 ,height-100);
     
     if(keyPressed && key == ' ')
     {
       round++;
-    }
+    }    
   }
   
   //Main Menu
   if(round == 1)
   {
+    //fill(0);
+    //text();
     
     fill(255);
     start.display();
@@ -116,7 +142,7 @@ void draw()
     //Skeleton for the future tic tac toe stragtegy
     if(!pTurn)
     {
-      //if(Easy){
+      //if(dif == Easy){
       int r = (int)random(0, width);
       int c = (int)random(0, height);
       for(int i = 0; i < col;i++)
@@ -130,11 +156,11 @@ void draw()
           }
         }
       }
-      //else if("Medium")
+      //else if(dif.equals("Medium"))
       //{
         
       //}
-      //else if("Hard")
+      //else if(dif.equals("Hard"))
       //{
         
       //}
@@ -162,7 +188,8 @@ void draw()
   if(game == 0 && sLeft == 0)
   {
     printW();
-  }    
+  }   
+  
   }
   
   //How to Play
@@ -233,6 +260,7 @@ void mousePressed()
      difficulty[i].setDiff(mouseX, mouseY); 
     }
   }
+  print("MouseX: "+mouseX+" MouseY: "+ mouseY+"\n");
 }
 
 void checkBoard()
@@ -295,14 +323,16 @@ void printW()
       fill(0);
       stroke(0);
       textSize(50);
-      text("Can you try a little \nharder next game?\n"+"AI won in "+turns+" turns", width/3 + 100, height/3);
+      text("Can you try a little \nharder next game?\n"+"AI won in "+turns+" turns", width/3 + 60, height/3);
+     // lose.trigger();
     }
     else
     {
       fill(0);
       stroke(0);
       textSize(50);
-      text("Player X wins the game!\n"+"Turns: "+turns, width/3 + 100, height/3);
+      text("Player X wins the game!\n"+"          Turns: "+turns, width/3 + 60, height/3);
+     // v.trigger();
     }
     
   }
@@ -315,15 +345,17 @@ void printW()
       fill(0);
       stroke(0);
       textSize(50);
-      text("Can you try a little \nharder next game?\n"+"AI won in "+turns+" turns", width/3 + 100, height/3);
-    }
+      text("Can you try a little \nharder next game?\n"+"AI won in "+turns+" turns", width/3 + 60, height/3);
+     // lose.trigger();
+  }
     
     else
     {
       fill(0);
       stroke(0);
       textSize(50);
-      text("Player O wins the game!\n"+"Turns: "+turns, width/3 + 100, height/3);
+      text("Player O wins the game!\n"+"          Turns: "+turns, width/3 + 60, height/3);
+     // v.trigger();
     }
   }
   
@@ -344,7 +376,7 @@ void printW()
     textSize(50);
     text("It's a tie game!", width/3 + 100, height/3);
     text("Press Enter to play again, Space to go back, or e to exit!", (width/4) - 150, height-100);
-  }     
+  }   
 }
 
 void keyPressed()
