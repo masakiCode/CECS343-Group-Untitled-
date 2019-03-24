@@ -10,3 +10,6 @@ black holes pic -> https://physicsworld.com/a/almost-certain-escape-from-a-black
 X image -> https://www.onlinewebfonts.com/icon/188653
 
 O image -> https://www.1001freedownloads.com/free-clipart/cyrillic-letter-o
+
+Warning Sign -> http://www.clker.com/clipart-warning-sign.html
+
