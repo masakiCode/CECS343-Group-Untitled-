@@ -20,12 +20,19 @@ int game = 0;
 int dx = 0;
 AudioSample v;
 AudioSample lose;
+AudioSample wrong;
+AudioSample w;
+int winS = 0;
+boolean sound;
 
 void setup()
 {
   minim = new Minim(this);
   v = minim.loadSample("victory.mp3");
   lose = minim.loadSample("wrong.wav", 2048);
+  wrong = minim.loadSample("nope.mp3");
+  w = minim.loadSample("warning.mp3");
+  sound = true;
   size(1920, 1080);
   smooth();
   img = loadImage("warn.png");
@@ -61,7 +68,6 @@ void setup()
     {
       pTurn = true;
     }
-    
 }
 
 void draw()
@@ -73,6 +79,11 @@ void draw()
   {
       fill(255, 0, 0);
       textSize(100);
+      if(sound == true)
+      {
+        w.trigger();
+        sound = false;
+      }
       //(width/3)+100
       //textAlign(CENTER);
       text("Warning! Warning! Warning!", dx, height/4);
@@ -88,7 +99,7 @@ void draw()
       textSize(60);
       text("The brightness of your computer screen may", (width/2)-width/3, height/3); 
       text("cause minor eye strain during long play sessions", (width/2)-width/3, (height/3)+100);
-      text("Dim the brightness of your computer for more ", (width/2)-width/3 , (height/3)+200);
+      text("dim the brightness of your computer for more ", (width/2)-width/3 , (height/3)+200);
       text("fun and reduced eye strain. Thank You, Enjoy!", (width/2)-width/3 , (height/3)+300);
       text("Press Space to continue", width/3 ,height-100);
     
@@ -142,17 +153,19 @@ void draw()
     //Skeleton for the future tic tac toe stragtegy
     if(!pTurn)
     {
-      //if(dif == Easy){
-      int r = (int)random(0, width);
-      int c = (int)random(0, height);
-      for(int i = 0; i < col;i++)
+      if(dif == "Easy")
       {
-        for(int j = 0; j < row;j++)
+        int r = (int)random(0, width);
+        int c = (int)random(0, height);
+        for(int i = 0; i < col;i++)
         {
-          if(board[i][j].chosen == 0 && r > board[i][j].x && r < board[i][j].x+board[i][j].w && c > board[i][j].y && c < board[i][j].y+board[i][j].h)
+          for(int j = 0; j < row;j++)
           {
+            if(board[i][j].chosen == 0 && r > board[i][j].x && r < board[i][j].x+board[i][j].w && c > board[i][j].y && c < board[i][j].y+board[i][j].h)
+            {
               board[i][j].pick(r, c);
               pTurn = true;
+            }
           }
         }
       }
@@ -243,6 +256,10 @@ void mousePressed()
          board[i][j].pick(mouseX, mouseY);   
          pTurn = false;
       }
+      else if(board[i][j].chosen != 0 && mouseX > board[i][j].x && mouseX < board[i][j].x+board[i][j].w && mouseY > board[i][j].y && mouseY < board[i][j].y+board[i][j].h && game == 0)
+      {
+         wrong.trigger(); 
+      }
     } 
   }  
   }
@@ -324,7 +341,11 @@ void printW()
       stroke(0);
       textSize(50);
       text("Can you try a little \nharder next game?\n"+"AI won in "+turns+" turns", width/3 + 60, height/3);
-     // lose.trigger();
+      if(winS == 0)
+      {
+        lose.trigger();
+        winS++;
+      }
     }
     else
     {
@@ -332,7 +353,12 @@ void printW()
       stroke(0);
       textSize(50);
       text("Player X wins the game!\n"+"          Turns: "+turns, width/3 + 60, height/3);
-     // v.trigger();
+      
+      if(winS == 0)
+      {
+        v.trigger();
+        winS++;
+      }
     }
     
   }
@@ -347,6 +373,11 @@ void printW()
       textSize(50);
       text("Can you try a little \nharder next game?\n"+"AI won in "+turns+" turns", width/3 + 60, height/3);
      // lose.trigger();
+     if(winS == 0)
+      {
+        lose.trigger();
+        winS++;
+      }
   }
     
     else
@@ -355,7 +386,12 @@ void printW()
       stroke(0);
       textSize(50);
       text("Player O wins the game!\n"+"          Turns: "+turns, width/3 + 60, height/3);
-     // v.trigger();
+     
+     if(winS == 0)
+      {
+        v.trigger();
+        winS++;
+      }
     }
   }
   
@@ -396,6 +432,7 @@ void keyPressed()
            game = 0;
            sLeft = 9;
            turns = 0;
+           winS=0;
         }
       }
       first = random(0, 100);
@@ -410,6 +447,7 @@ void keyPressed()
            board[i][j].clean();
            game = 0;
            sLeft = 9;
+           winS=0;
         }
       }
       first = random(0, 100);
@@ -433,6 +471,7 @@ void keyPressed()
            game = 0;
            sLeft = 9;
            turns = 0;
+           winS=0;
         }
       }
       
@@ -450,6 +489,7 @@ void keyPressed()
            game = 0;
            sLeft = 9;
            turns = 0;
+           winS=0;
         }
       }
       first = random(0, 100);
