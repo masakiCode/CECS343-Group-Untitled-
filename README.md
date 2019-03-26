@@ -13,3 +13,10 @@ O image -> https://www.1001freedownloads.com/free-clipart/cyrillic-letter-o
 
 Warning Sign -> http://www.clker.com/clipart-warning-sign.html
 
+Nope Sound -> https://www.youtube.com/watch?v=3Y7aWLpuxA4
+
+Warning Sound -> https://www.youtube.com/watch?v=DsWJOBZnqwY
+
+Victory Sound -> https://www.youtube.com/watch?v=LDU_Txk06tM
+
+Losing Sound -> https://www.youtube.com/watch?v=MIW2X9scK2g
