@@ -270,7 +270,7 @@ void mousePressed()
     diff.decide(mouseX, mouseY);
     q.decide(mouseX, mouseY);
   }
-  if(round == 4)
+  else if(round == 4)
   {
     for(int i = 0; i < 3; i++)
     {
