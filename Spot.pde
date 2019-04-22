@@ -1,3 +1,4 @@
+
 class Spot
 {
    int x;
@@ -5,9 +6,8 @@ class Spot
    int w;
    int h; 
    int chosen = 0;
-   PImage xImg = loadImage("Ximg.png");
-   PImage oImg = loadImage("Oimg.png");
-   
+   PImage xImg = loadImage("crab.jpg");
+   PImage oImg = loadImage("bHole.jpg");
    
    Spot(int newX, int newY, int newW, int newH)
    {
@@ -19,9 +19,10 @@ class Spot
    
    void pick(int cX, int cY)
    {
+       
        if (cX > x && cX < x+w && cY > y && cY < y+h) 
        {
-        
+         
          //X turn
         if (player == 0 && chosen == 0) 
         {
@@ -38,8 +39,29 @@ class Spot
             player = 0;
             turns++;
             sLeft--;   
-         }
+        }
        }
+    }
+    
+    void pick()
+   {
+         //X turn
+        if (player == 0 && chosen == 0) 
+        {
+          chosen = 1;
+          player = 1;
+          turns++;
+          sLeft--;
+        } 
+        
+        //O turn
+        else if (player == 1 && chosen == 0) 
+        {
+            chosen = 2;
+            player = 0;
+            turns++;
+            sLeft--;   
+        }
     }
    
    void decide(int cX, int cY)
@@ -70,7 +92,6 @@ class Spot
    {
        if (cX > x && cX < x+w && cY > y && cY < y+h) 
        {
-           String dif;
            if(chosen == 9)
            {
              dif = "Easy";
@@ -135,11 +156,11 @@ class Spot
      }
      if(round == 4)
      {
-       noStroke();
+         noStroke();
          stroke(0);
          strokeWeight(7);
          stroke(0);
          rect(x, y, w, h);
      }
    }
- } 
+ }  
