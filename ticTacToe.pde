@@ -37,6 +37,12 @@ void setup()
   smooth();
   img = loadImage("warn.png");
   //Board made of spots
+  
+  start = new Spot(width/8, 225, width/3, height/3-100);
+  hTp = new Spot((width - width/3)-240, 225 , width/3, height/3-100);
+  diff = new Spot(width/8, ((height-height/3)-100)+75, width/3, height/3-100);
+  q = new Spot((width-width/3)-240, ((height-height/3)-100)+75, width/3, height/3-100);
+  
   for(int i = 0; i < col;i++)
   {
     difficulty[i] = new Spot(width/3, i*(height/3)+25, width/4, height/4);
@@ -47,10 +53,6 @@ void setup()
     }
   }
   
-  start = new Spot(width/8, 100+125, width/3, height/3-100);
-  hTp = new Spot((width - width/3)-240, 100+125 , width/3, height/3-100);
-  diff = new Spot(width/8, ((height-height/3)-100)+75, width/3, height/3-100);
-  q = new Spot((width-width/3)-240, ((height-height/3)-100)+75, width/3, height/3-100);
   
   //Main Menu buttons//
   start.setChosen(5);
@@ -150,13 +152,14 @@ void draw()
     }
     
     //Easy AI picks random spot that's not taken
-    //Skeleton for the future tic tac toe stragtegy
+    //Skeleton for the future tic tac toe strategy
     if(!pTurn)
     {
+      int r = (int)random(0, width);
+      int c = (int)random(0, height);
       if(dif == "Easy")
       {
-        int r = (int)random(0, width);
-        int c = (int)random(0, height);
+        
         for(int i = 0; i < col;i++)
         {
           for(int j = 0; j < row;j++)
@@ -169,10 +172,24 @@ void draw()
           }
         }
       }
-      //else if(dif.equals("Medium"))
-      //{
-        
-      //}
+      else if(dif.equals("Medium"))
+      {
+        boolean blocked = blockCheck();
+        if(!blocked && !pTurn)
+        {
+          for(int i = 0; i < col;i++)
+          {
+            for(int j = 0; j < row;j++)
+            {
+              if(board[i][j].chosen == 0 && r > board[i][j].x && r < board[i][j].x+board[i][j].w && c > board[i][j].y && c < board[i][j].y+board[i][j].h)
+              {
+                board[i][j].pick(r, c);
+                pTurn = true;
+              }
+            }
+          }
+        }
+      }
       //else if(dif.equals("Hard"))
       //{
         
@@ -202,7 +219,6 @@ void draw()
   {
     printW();
   }   
-  
   }
   
   //How to Play
@@ -280,6 +296,172 @@ void mousePressed()
   print("MouseX: "+mouseX+" MouseY: "+ mouseY+"\n");
 }
 
+boolean blockCheck()
+{
+  if(board[0][0].chosen == 0 && board[1][1].chosen == 1 && board[2][2].chosen == 1)
+  {
+    board[0][0].pick();
+    pTurn = true;
+    return true;
+  }
+  else if(board[0][0].chosen == 1 && board[1][1].chosen == 0 && board[2][2].chosen == 1)
+  {
+    board[1][1].pick();
+    pTurn = true;
+    return true;
+  }
+  
+  else if(board[0][0].chosen == 1 && board[1][1].chosen == 1 && board[2][2].chosen == 0)
+  {
+    board[2][2].pick();
+    pTurn = true;
+    return true;
+  }
+  
+  else if(board[0][2].chosen == 0 && board[1][1].chosen == 1 && board[2][0].chosen == 1)
+  {
+     board[0][2].pick();
+     pTurn = true;
+     return true;
+  }
+  
+  else if(board[0][2].chosen == 1 && board[1][1].chosen == 0 && board[2][0].chosen == 1)
+  {
+     board[1][1].pick();
+     pTurn = true;
+     return true;
+  }
+  else if(board[0][2].chosen == 1 && board[1][1].chosen == 1 && board[2][0].chosen == 0)
+  {
+     board[2][0].pick();
+     pTurn = true;
+     return true;
+  }
+    if(board[0][0].chosen == 0 && board[1][1].chosen == 2 && board[2][2].chosen == 2)
+  {
+    board[0][0].pick();
+    pTurn = true;
+    return true;
+  }
+  else if(board[0][0].chosen == 2 && board[1][1].chosen == 0 && board[2][2].chosen == 2)
+  {
+    board[1][1].pick();
+    pTurn = true;
+    return true;
+  }
+  
+  else if(board[0][0].chosen == 2 && board[1][1].chosen == 2 && board[2][2].chosen == 0)
+  {
+    board[2][2].pick();
+    pTurn = true;
+    return true;
+  }
+  
+  else if(board[0][2].chosen == 0 && board[1][1].chosen == 2 && board[2][0].chosen == 2)
+  {
+     board[0][2].pick();
+     pTurn = true;
+     return true;
+  }
+  
+  else if(board[0][2].chosen == 2 && board[1][1].chosen == 0 && board[2][0].chosen == 2)
+  {
+     board[1][1].pick();
+     pTurn = true;
+     return true;
+  }
+  else if(board[0][2].chosen == 2 && board[1][1].chosen == 2 && board[2][0].chosen == 0)
+  {
+     board[2][0].pick();
+     pTurn = true;
+     return true;
+  }
+  for(int i = 0; i < 3; i++)
+  {
+      if(board[i][0].chosen == 0 && board[i][1].chosen == 2 && board[i][2].chosen == 2)
+      {
+        board[i][0].pick();
+        pTurn = true;
+        return true;
+      }
+      else if(board[i][0].chosen == 2 && board[i][1].chosen == 0 && board[i][2].chosen == 2)
+      {
+         board[i][1].pick(); 
+         pTurn = true;
+         return true;
+      }
+      else if(board[i][0].chosen == 2 && board[i][1].chosen == 2 && board[i][2].chosen == 0)
+      {
+          board[i][2].pick();
+          pTurn = true;
+          return true;
+      }
+    
+      else if(board[0][i].chosen == 0 && board[1][i].chosen == 2 && board[2][i].chosen == 2)
+      {
+          board[0][i].pick();
+          pTurn = true;
+          return true;
+      }
+    
+      else if(board[0][i].chosen == 2 && board[1][i].chosen == 0 && board[2][i].chosen == 2)
+      {
+        board[1][i].pick();
+        pTurn = true;
+        return true;
+      }
+    
+      else if(board[0][i].chosen == 2 && board[1][i].chosen == 2 && board[2][i].chosen == 0)
+      {
+        board[2][i].pick();
+        pTurn = true;
+        return true;
+      }
+      if(board[i][0].chosen == 0 && board[i][1].chosen == 1 && board[i][2].chosen == 1)
+      {
+        board[i][0].pick();
+        pTurn = true;
+        return true;
+      }
+      else if(board[i][0].chosen == 1 && board[i][1].chosen == 0 && board[i][2].chosen == 1)
+      {
+         board[i][1].pick(); 
+         pTurn = true;
+         return true;
+      }
+      else if(board[i][0].chosen == 1 && board[i][1].chosen == 1 && board[i][2].chosen == 0)
+      {
+          board[i][2].pick();
+          pTurn = true;
+          return true;
+      }
+    
+      else if(board[0][i].chosen == 0 && board[1][i].chosen == 1 && board[2][i].chosen == 1)
+      {
+          board[0][i].pick();
+          pTurn = true;
+          return true;
+      }
+    
+      else if(board[0][i].chosen == 1 && board[1][i].chosen == 0 && board[2][i].chosen == 1)
+      {
+        board[1][i].pick();
+        pTurn = true;
+        return true;
+      }
+    
+      else if(board[0][i].chosen == 1 && board[1][i].chosen == 1 && board[2][i].chosen == 0)
+      {
+        board[2][i].pick();
+        pTurn = true;
+        return true;
+      }
+    }
+  print("false");
+  return false;
+  
+}
+
 void checkBoard()
 { 
   //Check rows and cols
@@ -306,6 +488,7 @@ void checkBoard()
     }
   }
   
+  //Check diagonals
   if(board[0][0].chosen == 1 && board[1][1].chosen == 1 && board[2][2].chosen == 1)
   {
     game = 1;
