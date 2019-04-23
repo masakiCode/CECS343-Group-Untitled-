@@ -1,29 +1,31 @@
-import ddf.minim.*;
+import ddf.minim.*; //Import for sound
 
-PImage img;
-Minim minim;
+PImage img; // Variable used to store images
+Minim minim; // Sound variable
 
-Spot[][] board = new Spot[3][3];
-Spot[] difficulty = new Spot[3];
-String dif = "Easy";
+Spot[][] board = new Spot[3][3]; // Board made of 9 Spots
+Spot[] difficulty = new Spot[3]; // Spots used as difficulty options
+String dif = "Easy"; //Set difficulty
 int col = 3;
 int row = 3;
-int turns = 0; 
-int player = 0; //player = 0 //computer = 1
-int sLeft = 9;
-float first;    //random
-int round = 0;
+int turns = 0;  //Turn counter 
+int player = 0; //Variable to check X 
+int sLeft = 9;  //Spots left
+float first;    //random number
+int round = 0;  //Program round
 int level = 9;  //Difficulty Choices
-Spot start, hTp, diff, q;
-boolean pTurn;
-int game = 0;
-int dx = 0;
-AudioSample v;
-AudioSample lose;
-AudioSample wrong;
-AudioSample w;
-int winS = 0;
-boolean sound;
+Spot start, hTp, diff, q; //Menu option spots
+boolean pTurn; //Variable used to alternate Player and AI turns
+int game = 0; // Win variable
+int dx = 0; //Variable used to translate the Warning screen 
+AudioSample v; //Victory AudioSample variable
+AudioSample lose; //Lose AudioSample variable
+AudioSample wrong; //Taken spot AudioSample variable
+AudioSample w; //Warning AudioSample variable
+int winS = 0; 
+boolean sound; // Booolean to make the sounds react once
+boolean blocked = false; //Blocking strategy variable
+        
 
 void setup()
 {
@@ -36,7 +38,6 @@ void setup()
   size(1920, 1080);
   smooth();
   img = loadImage("warn.png");
-  //Board made of spots
   
   start = new Spot(width/8, 225, width/3, height/3-100);
   hTp = new Spot((width - width/3)-240, 225 , width/3, height/3-100);
@@ -86,8 +87,7 @@ void draw()
         w.trigger();
         sound = false;
       }
-      //(width/3)+100
-      //textAlign(CENTER);
+      
       text("Warning! Warning! Warning!", dx, height/4);
       dx+=7;
       if(width < (dx))
@@ -174,7 +174,7 @@ void draw()
       }
       else if(dif.equals("Medium"))
       {
-        boolean blocked = blockCheck();
+        blocked = blockCheck();
         if(!blocked && !pTurn)
         {
           for(int i = 0; i < col;i++)
@@ -236,6 +236,7 @@ void draw()
     text("can be either a person or AI with set difficulty Enjoy!", (width/2)-width/3 , (height/3)+500);
     text("Press Space to go back", width/3 ,height-100);
     
+    //Takes the user back to Main Menu
     if(keyPressed && key == ' ')
     {
       round = 1;
@@ -259,6 +260,7 @@ void draw()
   
 }
 
+//Overridden mousePressed method
 void mousePressed()
 {
   if(round == 2 && sLeft != 0 && game == 0)
@@ -459,7 +461,6 @@ boolean blockCheck()
     }
   print("false");
   return false;
-  
 }
 
 void checkBoard()
@@ -677,6 +678,7 @@ void keyPressed()
       }
       first = random(0, 100);
     }
+    //Used to exit the program
     else if(key == 'e' || key == 'E' && keyPressed)
     {
       exit();
