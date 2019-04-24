@@ -15,7 +15,7 @@ boolean isMovesLeft(Spot[][] board)
     return false; 
 } 
   
-int evaluate(Spot[][] board) 
+int evaluate(Spot[][] b) 
 {   
     if( first >50 )
     {  
@@ -30,12 +30,12 @@ int evaluate(Spot[][] board)
 
     for (int row = 0; row<3; row++) 
     { 
-        if (board[row][0].chosen == board[row][1].chosen && 
-            board[row][1].chosen == board[row][2].chosen) 
+        if (b[row][0].chosen == b[row][1].chosen && 
+            b[row][1].chosen == b[row][2].chosen) 
         { 
-            if (board[row][0].chosen==player) 
-                return +10; 
-            else if (board[row][0].chosen == ai) 
+            if (b[row][0].chosen==player) 
+                return 10; 
+            else if (b[row][0].chosen == ai) 
                 return -10; 
         } 
     } 
@@ -43,48 +43,47 @@ int evaluate(Spot[][] board)
 
     for (int col = 0; col<3; col++) 
     { 
-        if (board[0][col].chosen == board[1][col].chosen && 
-            board[1][col].chosen == board[2][col].chosen) 
+        if (b[0][col].chosen == b[1][col].chosen && 
+            b[1][col].chosen == b[2][col].chosen) 
         { 
-            if (board[0][col].chosen == player) 
-                return +10; 
+            if (b[0][col].chosen == player) 
+                return 10; 
   
-            else if (board[0][col].chosen == ai) 
+            else if (b[0][col].chosen == ai) 
                 return -10; 
         } 
     } 
   
-    if (board[0][0].chosen==board[1][1].chosen && board[1][1].chosen == board[2][2].chosen) 
+    if (b[0][0].chosen==b[1][1].chosen && b[1][1].chosen == b[2][2].chosen) 
     { 
-        if (board[0][0].chosen == player) 
-            return +10; 
-        else if (board[0][0].chosen == ai) 
+        if (b[0][0].chosen == player) 
+            return 10; 
+        else if (b[0][0].chosen == ai) 
             return -10; 
     } 
   
-    if (board[0][2].chosen ==board[1][1].chosen && board[1][1].chosen == board[2][0].chosen) 
+    if (b[0][2].chosen ==b[1][1].chosen && b[1][1].chosen == b[2][0].chosen) 
     { 
-        if (board[0][2].chosen == player) 
-            return +10; 
-        else if (board[0][2].chosen == ai) 
+        if (b[0][2].chosen == player) 
+            return 10; 
+        else if (b[0][2].chosen == ai) 
             return -10; 
     } 
 
     return 0; 
 } 
-  
+   
 int minimax(Spot board[][], int depth, boolean isMax) 
 { 
     int score = evaluate(board); 
-  
-
+    
     if (score == 10) 
         return score; 
 
     if (score == -10) 
         return score; 
 
-    if (isMovesLeft(board)==false) 
+    if (isMovesLeft(board)== false) 
         return 0; 
 
     if (isMax) 
@@ -153,22 +152,20 @@ Move findBestMove(Spot board[][])
 
                 board[i][j].chosen = player; 
 
-                int moveVal = minimax(board, 0, false); 
+                int moveV = minimax(board, 0, false); 
   
                 board[i][j].chosen = 0; 
   
-                if (moveVal > bestV) 
+                if (moveV > bestV) 
                 { 
                     bestM.row = i; 
                     bestM.col = j; 
-                    bestV = moveVal; 
+                    bestV = moveV; 
                 } 
             } 
         } 
     } 
   
-    println("The value of the best Move is : %d\n\n", 
-            bestV); 
     return bestM; 
 } 
 }
