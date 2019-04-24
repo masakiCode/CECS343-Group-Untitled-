@@ -1,12 +1,12 @@
 
 class Spot
 {
-   int x;
-   int y;
-   int w;
-   int h; 
-   int chosen = 0;
-   PImage xImg = loadImage("crab.jpg");
+   int x; // spot x coordinates
+   int y; //spot y coordinates
+   int w; // spot x dimensions
+   int h; // spot y dimensions
+   int chosen = 0; //spot picked or not. 0 for untaken, 1 for taken
+   PImage xImg = loadImage("crab.jpg"); 
    PImage oImg = loadImage("bHole.jpg");
    
    Spot(int newX, int newY, int newW, int newH)
@@ -63,7 +63,8 @@ class Spot
             sLeft--;   
         }
     }
-   
+    
+   //decides which mode to go into
    void decide(int cX, int cY)
    {
      if (cX > x && cX < x+w && cY > y && cY < y+h) 
