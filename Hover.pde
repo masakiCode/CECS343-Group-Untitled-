@@ -82,8 +82,8 @@ class Hover
                   }
                   if (board[1][0].chosen == cVar && board[1][1].chosen == cVar && board[1][2].chosen == 0) {
                     print("hint:");
-                    println("spot 5");
-                    return 5;
+                    println("spot 3");
+                    return 3;
                   }
                   if (board[1][0].chosen == cVar && board[1][2].chosen == cVar && board[1][1].chosen == 0) {
                     print("hint:");
@@ -92,8 +92,8 @@ class Hover
                   }
                   if (board[1][1].chosen == cVar && board[1][2].chosen == cVar && board[1][0].chosen == 0) {
                     print("hint:");
-                    println("spot 3");
-                    return 3;
+                    println("spot 5");
+                    return 5;
                   }
                   if (board[2][0].chosen == cVar && board[2][1].chosen == cVar && board[2][2].chosen == 0) {
                     print("hint:");
@@ -217,8 +217,8 @@ class Hover
                   }
                   if (board[1][0].chosen == cVar && board[1][1].chosen == cVar && board[1][2].chosen == 0) {
                     print("hint:");
-                    println("spot 5");
-                    return 5;
+                    println("spot 3");
+                    return 3;
                   }
                   if (board[1][0].chosen == cVar && board[1][2].chosen == cVar && board[1][1].chosen == 0) {
                     print("hint:");
@@ -227,8 +227,8 @@ class Hover
                   }
                   if (board[1][1].chosen == cVar && board[1][2].chosen == cVar && board[1][0].chosen == 0) {
                     print("hint:");
-                    println("spot 3");
-                    return 3;
+                    println("spot 5");
+                    return 5;
                   }
                   if (board[2][0].chosen == cVar && board[2][1].chosen == cVar && board[2][2].chosen == 0) {
                     print("hint:");
