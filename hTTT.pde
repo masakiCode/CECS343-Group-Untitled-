@@ -818,7 +818,7 @@ void printW()
 void keyPressed()
 {  
    if(round == 2 && game ==0){
-     if(key == 'z' && keyPressed ){
+     if(key == 26 && keyPressed ){
         if(!moveStack.isEmpty()){
           undoMove();
           
