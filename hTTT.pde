@@ -817,14 +817,14 @@ void printW()
 
 void keyPressed()
 {  
-    if(round ==2 && game == 0){
+   if(round == 2 && game ==0){
      if(key == 'z' && keyPressed ){
         if(!moveStack.isEmpty()){
           undoMove();
           
         }
       }
-    }
+   }
   //Reset Game
   if (round == 2 && game == 0 && sLeft == 0)
   {
@@ -862,7 +862,9 @@ void keyPressed()
       exit();
     }
   } else if (round == 2 && (game == 1 || game == 2)) // if the game is still going on
-  {
+  { 
+    
+    
     if (key == ENTER && keyPressed)
     {
       round = 2;
@@ -904,10 +906,11 @@ void keyPressed()
 
 void undoMove() {
   int i = 0;
+  Spot prevMove;
   while( i < 2){
-    Spot prevMove = moveStack.pop();
+    prevMove = moveStack.pop();
     image(bImg, prevMove.x, prevMove.y, width/3, height/3);
-    moveStack.pop().clean();
+    prevMove.clean();
     pTurn = !pTurn;
     sLeft++;
     turns--;
