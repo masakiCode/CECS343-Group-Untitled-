@@ -822,6 +822,8 @@ void keyPressed()
         if(!moveStack.isEmpty()){
           undoMove();
           
+        }else{
+          wrong.trigger();
         }
       }
    }
