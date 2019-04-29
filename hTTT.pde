@@ -907,13 +907,10 @@ void keyPressed()
 void undoMove() {
   int i = 0;
   Spot prevMove;
-  while( i < 2){
     prevMove = moveStack.pop();
     image(bImg, prevMove.x, prevMove.y, width/3, height/3);
     prevMove.clean();
-    pTurn = !pTurn;
     sLeft++;
     turns--;
-    i++;
-  }
+
 }
