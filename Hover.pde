@@ -57,7 +57,7 @@ class Hover
                     println("spot 2");
                     return 2;
                   }
-                  if (board[1][2].chosen == cVar && board[0][2].chosen == cVar && board[1][2].chosen == 0) {
+                  if (board[0][0].chosen == cVar && board[2][0].chosen == cVar && board[1][0].chosen == 0) {
                     print("hint:");
                     println("spot 5");
                     return 5;
@@ -192,7 +192,7 @@ class Hover
                     println("spot 2");
                     return 2;
                   }
-                  if (board[1][2].chosen == cVar && board[0][2].chosen == cVar && board[1][2].chosen == 0) {
+                  if (board[0][0].chosen == cVar && board[2][0].chosen == cVar && board[1][0].chosen == 0) {
                     print("hint:");
                     println("spot 5");
                     return 5;
