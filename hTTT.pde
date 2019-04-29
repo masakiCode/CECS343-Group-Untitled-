@@ -12,7 +12,7 @@ Minim minim;
 
 Spot[][] board = new Spot[3][3];
 Spot[] difficulty = new Spot[3];
-Deque<Integer[]> moveStack = new LinkedList();
+Deque<Spot> moveStack = new LinkedList(); //Stack for previous moves
 
 String dif = "Easy";
 int col = 3; // number of columns 
@@ -38,6 +38,7 @@ int hoverHint; // Hover hint
 
 //hint image
 PImage hImg;
+PImage bImg; // blank image
 
 
 void setup()
@@ -52,6 +53,7 @@ void setup()
   smooth();
   img = loadImage("warn.png");
   hImg = loadImage("hint.png");
+  bImg = loadImage("blank.jpg");
   
   //Board made of spots
   start = new Spot(width/8, 225, width/3, height/3-100); 
@@ -184,6 +186,7 @@ void draw()
               if (board[i][j].chosen == 0 && r > board[i][j].x && r < board[i][j].x+board[i][j].w && c > board[i][j].y && c < board[i][j].y+board[i][j].h)
               {
                 board[i][j].pick(r, c);
+                moveStack.push( board[i][j]); 
                 pTurn = true;
               }
             }
@@ -200,6 +203,7 @@ void draw()
                 if (board[i][j].chosen == 0 && r > board[i][j].x && r < board[i][j].x+board[i][j].w && c > board[i][j].y && c < board[i][j].y+board[i][j].h)
                 {
                   board[i][j].pick(r, c);
+                  moveStack.push( board[i][j]); 
                   pTurn = true;
                 }
               }
@@ -224,6 +228,7 @@ void draw()
                 println("ROW: %d COL: %d\n\n", bestMove.row, 
                                       bestMove.col ); 
                 board[bestMove.row][bestMove.col].pick();
+                moveStack.push( board[bestMove.row][bestMove.col]); 
               }
               pTurn = true;
           }
@@ -340,8 +345,7 @@ void mousePressed()
         if (board[i][j].chosen == 0 && mouseX > board[i][j].x && mouseX < board[i][j].x+board[i][j].w && mouseY > board[i][j].y && mouseY < board[i][j].y+board[i][j].h)
         {
           board[i][j].pick(mouseX, mouseY); 
-          Integer[] moveArray = {i,j};
-          moveStack.push(moveArray); //adds row
+          moveStack.push( board[i][j]); //adds spor into stack.
           pTurn = false;
         } else if (board[i][j].chosen != 0 && mouseX > board[i][j].x && mouseX < board[i][j].x+board[i][j].w && mouseY > board[i][j].y && mouseY < board[i][j].y+board[i][j].h && game == 0)
         {
@@ -373,31 +377,37 @@ boolean winCheck()
   if (board[0][0].chosen == 0 && board[1][1].chosen == 1 && board[2][2].chosen == 1)
   {
     board[0][0].pick();
+    moveStack.push( board[0][0]); 
     pTurn = true;
     return true;
   } else if (board[0][0].chosen == 1 && board[1][1].chosen == 0 && board[2][2].chosen == 1)
   {
     board[1][1].pick();
+    moveStack.push( board[1][1]); 
     pTurn = true;
     return true;
   } else if (board[0][0].chosen == 1 && board[1][1].chosen == 1 && board[2][2].chosen == 0)
   {
     board[2][2].pick();
+    moveStack.push( board[2][2]); 
     pTurn = true;
     return true;
   } else if (board[0][2].chosen == 0 && board[1][1].chosen == 1 && board[2][0].chosen == 1)
   {
     board[0][2].pick();
+    moveStack.push( board[0][2]); 
     pTurn = true;
     return true;
   } else if (board[0][2].chosen == 1 && board[1][1].chosen == 0 && board[2][0].chosen == 1)
   {
     board[1][1].pick();
+    moveStack.push( board[1][1]); 
     pTurn = true;
     return true;
   } else if (board[0][2].chosen == 1 && board[1][1].chosen == 1 && board[2][0].chosen == 0)
   {
     board[2][0].pick();
+    moveStack.push( board[2][0]); 
     pTurn = true;
     return true;
   }
@@ -406,31 +416,37 @@ boolean winCheck()
   if (board[i][0].chosen == 0 && board[i][1].chosen == 1 && board[i][2].chosen == 1)
     {
       board[i][0].pick();
+      moveStack.push( board[i][0]); 
       pTurn = true;
       return true;
     } else if (board[i][0].chosen == 1 && board[i][1].chosen == 0 && board[i][2].chosen == 1)
     {
       board[i][1].pick();
+      moveStack.push( board[i][1]); 
       pTurn = true;
       return true;
     } else if (board[i][0].chosen == 1 && board[i][1].chosen == 1 && board[i][2].chosen == 0)
     {
       board[i][2].pick();
+      moveStack.push( board[i][2]); 
       pTurn = true;
       return true;
     } else if (board[0][i].chosen == 0 && board[1][i].chosen == 1 && board[2][i].chosen == 1)
     {
       board[0][i].pick();
+      moveStack.push( board[0][i]); 
       pTurn = true;
       return true;
     } else if (board[0][i].chosen == 1 && board[1][i].chosen == 0 && board[2][i].chosen == 1)
     {
       board[1][i].pick();
+      moveStack.push( board[1][i]); 
       pTurn = true;
       return true;
     } else if (board[0][i].chosen == 1 && board[1][i].chosen == 1 && board[2][i].chosen == 0)
     {
       board[2][i].pick();
+      moveStack.push( board[2][i]); 
       pTurn = true;
       return true;
     }
@@ -441,31 +457,37 @@ boolean winCheck()
   if (board[0][0].chosen == 0 && board[1][1].chosen == 2 && board[2][2].chosen == 2)
   {
     board[0][0].pick();
+    moveStack.push( board[0][0]); 
     pTurn = true;
     return true;
   } else if (board[0][0].chosen == 2 && board[1][1].chosen == 0 && board[2][2].chosen == 2)
   {
     board[1][1].pick();
+    moveStack.push( board[1][1]); 
     pTurn = true;
     return true;
   } else if (board[0][0].chosen == 2 && board[1][1].chosen == 2 && board[2][2].chosen == 0)
   {
     board[2][2].pick();
+    moveStack.push( board[2][2]); 
     pTurn = true;
     return true;
   } else if (board[0][2].chosen == 0 && board[1][1].chosen == 2 && board[2][0].chosen == 2)
   {
     board[0][2].pick();
+    moveStack.push( board[0][2]); 
     pTurn = true;
     return true;
   } else if (board[0][2].chosen == 2 && board[1][1].chosen == 0 && board[2][0].chosen == 2)
   {
     board[1][1].pick();
+    moveStack.push( board[1][1]); 
     pTurn = true;
     return true;
   } else if (board[0][2].chosen == 2 && board[1][1].chosen == 2 && board[2][0].chosen == 0)
   {
     board[2][0].pick();
+    moveStack.push( board[2][0]); 
     pTurn = true;
     return true;
   }
@@ -475,31 +497,37 @@ boolean winCheck()
     if (board[i][0].chosen == 0 && board[i][1].chosen == 2 && board[i][2].chosen == 2)
     {
       board[i][0].pick();
+      moveStack.push( board[i][0]); 
       pTurn = true;
       return true;
     } else if (board[i][0].chosen == 2 && board[i][1].chosen == 0 && board[i][2].chosen == 2)
     {
       board[i][1].pick(); 
+      moveStack.push( board[i][1]); 
       pTurn = true;
       return true;
     } else if (board[i][0].chosen == 2 && board[i][1].chosen == 2 && board[i][2].chosen == 0)
     {
       board[i][2].pick();
+      moveStack.push( board[i][2]); 
       pTurn = true;
       return true;
     } else if (board[0][i].chosen == 0 && board[1][i].chosen == 2 && board[2][i].chosen == 2)
     {
       board[0][i].pick();
+      moveStack.push( board[0][i]); 
       pTurn = true;
       return true;
     } else if (board[0][i].chosen == 2 && board[1][i].chosen == 0 && board[2][i].chosen == 2)
     {
       board[1][i].pick();
+      moveStack.push( board[1][i]); 
       pTurn = true;
       return true;
     } else if (board[0][i].chosen == 2 && board[1][i].chosen == 2 && board[2][i].chosen == 0)
     {
       board[2][i].pick();
+      moveStack.push( board[2][i]); 
       pTurn = true;
       return true;
     }
@@ -515,62 +543,74 @@ boolean blockCheck()
   if (board[0][0].chosen == 0 && board[1][1].chosen == 1 && board[2][2].chosen == 1)
   {
     board[0][0].pick();
+    moveStack.push( board[0][0]); 
     pTurn = true;
     return true;
   } else if (board[0][0].chosen == 1 && board[1][1].chosen == 0 && board[2][2].chosen == 1)
   {
     board[1][1].pick();
+    moveStack.push( board[1][1]); 
     pTurn = true;
     return true;
   } else if (board[0][0].chosen == 1 && board[1][1].chosen == 1 && board[2][2].chosen == 0)
   {
     board[2][2].pick();
+    moveStack.push( board[2][2]); 
     pTurn = true;
     return true;
   } else if (board[0][2].chosen == 0 && board[1][1].chosen == 1 && board[2][0].chosen == 1)
   {
     board[0][2].pick();
+    moveStack.push( board[0][2]); 
     pTurn = true;
     return true;
   } else if (board[0][2].chosen == 1 && board[1][1].chosen == 0 && board[2][0].chosen == 1)
   {
     board[1][1].pick();
+    moveStack.push( board[1][1]); 
     pTurn = true;
     return true;
   } else if (board[0][2].chosen == 1 && board[1][1].chosen == 1 && board[2][0].chosen == 0)
   {
     board[2][0].pick();
+    moveStack.push( board[2][0]); 
     pTurn = true;
     return true;
   }
   if (board[0][0].chosen == 0 && board[1][1].chosen == 2 && board[2][2].chosen == 2)
   {
     board[0][0].pick();
+    moveStack.push( board[0][0]); 
     pTurn = true;
     return true;
   } else if (board[0][0].chosen == 2 && board[1][1].chosen == 0 && board[2][2].chosen == 2)
   {
     board[1][1].pick();
+    moveStack.push( board[1][1]); 
     pTurn = true;
     return true;
   } else if (board[0][0].chosen == 2 && board[1][1].chosen == 2 && board[2][2].chosen == 0)
   {
     board[2][2].pick();
+    moveStack.push( board[2][2]); 
     pTurn = true;
     return true;
   } else if (board[0][2].chosen == 0 && board[1][1].chosen == 2 && board[2][0].chosen == 2)
   {
     board[0][2].pick();
+    moveStack.push( board[0][2]); 
     pTurn = true;
     return true;
   } else if (board[0][2].chosen == 2 && board[1][1].chosen == 0 && board[2][0].chosen == 2)
   {
     board[1][1].pick();
+    moveStack.push( board[1][1]); 
     pTurn = true;
     return true;
   } else if (board[0][2].chosen == 2 && board[1][1].chosen == 2 && board[2][0].chosen == 0)
   {
     board[2][0].pick();
+    moveStack.push( board[2][0]); 
     pTurn = true;
     return true;
   }
@@ -579,62 +619,74 @@ boolean blockCheck()
     if (board[i][0].chosen == 0 && board[i][1].chosen == 2 && board[i][2].chosen == 2)
     {
       board[i][0].pick();
+      moveStack.push( board[i][0]); 
       pTurn = true;
       return true;
     } else if (board[i][0].chosen == 2 && board[i][1].chosen == 0 && board[i][2].chosen == 2)
     {
       board[i][1].pick(); 
+      moveStack.push( board[i][1]); 
       pTurn = true;
       return true;
     } else if (board[i][0].chosen == 2 && board[i][1].chosen == 2 && board[i][2].chosen == 0)
     {
       board[i][2].pick();
+      moveStack.push( board[i][2]); 
       pTurn = true;
       return true;
     } else if (board[0][i].chosen == 0 && board[1][i].chosen == 2 && board[2][i].chosen == 2)
     {
       board[0][i].pick();
+      moveStack.push( board[0][i]); 
       pTurn = true;
       return true;
     } else if (board[0][i].chosen == 2 && board[1][i].chosen == 0 && board[2][i].chosen == 2)
     {
       board[1][i].pick();
+      moveStack.push( board[1][i]); 
       pTurn = true;
       return true;
     } else if (board[0][i].chosen == 2 && board[1][i].chosen == 2 && board[2][i].chosen == 0)
     {
       board[2][i].pick();
+      moveStack.push( board[2][i]); 
       pTurn = true;
       return true;
     }
     if (board[i][0].chosen == 0 && board[i][1].chosen == 1 && board[i][2].chosen == 1)
     {
       board[i][0].pick();
+      moveStack.push( board[i][0]); 
       pTurn = true;
       return true;
     } else if (board[i][0].chosen == 1 && board[i][1].chosen == 0 && board[i][2].chosen == 1)
     {
       board[i][1].pick(); 
+      moveStack.push( board[i][1]); 
       pTurn = true;
       return true;
     } else if (board[i][0].chosen == 1 && board[i][1].chosen == 1 && board[i][2].chosen == 0)
     {
       board[i][2].pick();
+      moveStack.push( board[i][2]); 
       pTurn = true;
       return true;
     } else if (board[0][i].chosen == 0 && board[1][i].chosen == 1 && board[2][i].chosen == 1)
     {
       board[0][i].pick();
+      moveStack.push( board[0][i]); 
       pTurn = true;
       return true;
     } else if (board[0][i].chosen == 1 && board[1][i].chosen == 0 && board[2][i].chosen == 1)
     {
       board[1][i].pick();
+      moveStack.push( board[1][i]); 
       pTurn = true;
       return true;
     } else if (board[0][i].chosen == 1 && board[1][i].chosen == 1 && board[2][i].chosen == 0)
     {
       board[2][i].pick();
+      moveStack.push( board[2][i]); 
       pTurn = true;
       return true;
     }
@@ -764,8 +816,15 @@ void printW()
 }
 
 void keyPressed()
-{
-
+{  
+    if(round ==2 && game == 0){
+     if(key == 'z' && keyPressed ){
+        if(!moveStack.isEmpty()){
+          undoMove();
+          
+        }
+      }
+    }
   //Reset Game
   if (round == 2 && game == 0 && sLeft == 0)
   {
@@ -839,21 +898,19 @@ void keyPressed()
     {
       exit();
     }
-    if(key == 'z' && keyPressed ){
-      if(!moveStack.isEmpty()){
-        undoMove();
-      }
-    }
+
   }
 }
 
 void undoMove() {
-  
-  Integer[] previousMove = moveStack.pop();
-  int row = previousMove[0];
-  int colmn = previousMove[1];
-  board[row][colmn].clean();
-  pTurn = !pTurn;
-  sLeft++;
-  turns--;
+  int i = 0;
+  while( i < 2){
+    Spot prevMove = moveStack.pop();
+    image(bImg, prevMove.x, prevMove.y, width/3, height/3);
+    moveStack.pop().clean();
+    pTurn = !pTurn;
+    sLeft++;
+    turns--;
+    i++;
+  }
 }

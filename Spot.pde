@@ -1,4 +1,3 @@
-
 class Spot
 {
    int x; // spot x coordinates
@@ -8,6 +7,7 @@ class Spot
    int chosen = 0; //spot picked or not. 0 for untaken, 1 for taken
    PImage xImg = loadImage("crab.jpg"); 
    PImage oImg = loadImage("bHole.jpg");
+   PImage bImg = loadImage("blank.jpg");
    
    Spot(int newX, int newY, int newW, int newH)
    {
@@ -117,6 +117,7 @@ class Spot
    void clean()
    {
       chosen = 0; 
+      image(bImg, x, y, w, h);
    }
    
    //Set chosen
@@ -164,4 +165,4 @@ class Spot
          rect(x, y, w, h);
      }
    }
- }  
+ } 
