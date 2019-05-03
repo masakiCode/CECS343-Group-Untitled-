@@ -52,7 +52,7 @@ void setup()
   size(1920, 1080);
   smooth();
   img = loadImage("warn.png");
-  hImg = loadImage("hint.png");
+  hImg = loadImage("hint.jng");
   bImg = loadImage("blank.jpg");
   
   //Board made of spots
