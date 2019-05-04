@@ -367,7 +367,8 @@ void mousePressed()
       difficulty[i].setDiff(mouseX, mouseY);
     }
   }
-  print("MouseX: "+mouseX+" MouseY: "+ mouseY+"\n");
+  turns = 0;
+  //print("MouseX: "+mouseX+" MouseY: "+ mouseY+"\n");
 }
 
 boolean winCheck()
