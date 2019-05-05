@@ -36,24 +36,25 @@ boolean sound; //playing sound
 boolean blocked = false; //Blocked variable
 int hoverHint; // Hover hint
 
-//hint image
 PImage hImg;
 PImage bImg; // blank image
 
 
 void setup()
 {
+  size(1920, 1080);
   minim = new Minim(this);
   v = minim.loadSample("victory.mp3");
   lose = minim.loadSample("wrong.wav", 2048);
   wrong = minim.loadSample("nope.mp3");
   w = minim.loadSample("warning.mp3");
   sound = true;
-  size(1920, 1080);
   smooth();
   img = loadImage("warn.png");
-  hImg = loadImage("hint.jng");
+  hImg = loadImage("hint.jpg");
   bImg = loadImage("blank.jpg");
+  
+  
   
   //Board made of spots
   start = new Spot(width/8, 225, width/3, height/3-100); 
@@ -83,7 +84,8 @@ void setup()
   if (first >= 50) //Above 50, computer first
   {
     pTurn = false;
-  } else // else, player first
+  } 
+  else // else, player first
   {
     pTurn = true;
   }
@@ -103,8 +105,7 @@ void draw()
       //w.trigger();
       sound = false;
     }
-    //(width/3)+100
-    //textAlign(CENTER);
+
     text("Warning! Warning! Warning!", dx, height/4);
     dx+=7;
     if (width < (dx))
@@ -131,8 +132,6 @@ void draw()
   //Main Menu
   if (round == 1)
   {
-    //fill(0);
-    //text();
 
     fill(255);
     start.display();
@@ -150,7 +149,6 @@ void draw()
   //Game starts
   if (round == 2)
   { 
-
     
     //X is always first
     if (sLeft == 9)
@@ -178,7 +176,6 @@ void draw()
         int c = (int)random(0, height);
         if (dif == "Easy")
         {
-
           for (int i = 0; i < col; i++)
           {
             for (int j = 0; j < row; j++)
@@ -191,7 +188,9 @@ void draw()
               }
             }
           }
-        } else if (dif.equals("Medium"))
+        }
+        
+        else if (dif.equals("Medium"))
         {
           blocked = blockCheck();
           if (!blocked && !pTurn)
@@ -210,6 +209,7 @@ void draw()
             }
           }
         }
+        
         else if(dif.equals("Hard"))
         { 
           if(!pTurn)
@@ -220,29 +220,29 @@ void draw()
               blocked = blockCheck();
             }
             if (!blocked && !pTurn)
-          {
-            Move bestMove = new Move();
-              if( bestMove.isMovesLeft(board)){ 
+            {
+              Move bestMove = new Move();
+              if( bestMove.isMovesLeft(board))
+              { 
                 bestMove = bestMove.findBestMove(board); 
                 println("The Optimal Move is :\n"); 
-                println("ROW: %d COL: %d\n\n", bestMove.row, 
-                                      bestMove.col ); 
+                println("ROW: %d COL: %d\n\n", bestMove.row, bestMove.col); 
                 board[bestMove.row][bestMove.col].pick();
                 moveStack.push( board[bestMove.row][bestMove.col]); 
               }
               pTurn = true;
-          }
+            }
           }    
         }
       }
     }
     
-        Hover h1 = new Hover();
+    Hover h1 = new Hover();
     hoverHint = h1.hover();
     
-    if ( hoverHint == 0 ) {
-      image(hImg, board[0][0].x, board[0][0].y, width/3, height/3);
-      
+    if ( hoverHint == 0 ) 
+    {
+      image(hImg, board[0][0].x, board[0][0].y, width/3, height/3); 
     } else if ( hoverHint == 1) {
 
       image(hImg, board[0][1].x, board[0][1].y, width/3, height/3);
@@ -360,14 +360,15 @@ void mousePressed()
     hTp.decide(mouseX, mouseY);
     diff.decide(mouseX, mouseY);
     q.decide(mouseX, mouseY);
-  } else if (round == 4)
+  } 
+  else if (round == 4)
   {
     for (int i = 0; i < 3; i++)
     {
       difficulty[i].setDiff(mouseX, mouseY);
     }
+    turns = 0;
   }
-  turns = 0;
   //print("MouseX: "+mouseX+" MouseY: "+ mouseY+"\n");
 }
 
@@ -534,7 +535,7 @@ boolean winCheck()
     }
   }
   }
-  print(first);
+  //print(first);
   return false;
 }
 
@@ -735,16 +736,24 @@ void checkBoard()
 
 void printW()
 {
-  fill(0);
+  fill(255);
   stroke(0);
   textSize(50);
+  for (int i = 0; i < col; i++)
+      {
+        for (int j = 0; j < row; j++)
+        {
+          board[i][j].display();
+        }
+      }
+  
   if (game == 1)
   { 
     //Winner with # of turns Player/AI for X
     if (pTurn == true)
     {
-      fill(0);
-      stroke(0);
+      fill(0, 255, 0);
+      stroke(20);
       textSize(50);
       text("Can you try a little \nharder next game?\n"+"AI won in "+turns+" turns", width/3 + 60, height/3);
       if (winS == 0)
@@ -754,10 +763,11 @@ void printW()
       }
     } else
     {
-      fill(0);
-      stroke(0);
+      fill(0, 255, 0);
+      stroke(20);
       textSize(50);
       text("Player X wins the game!\n"+"          Turns: "+turns, width/3 + 60, height/3);
+      
 
       if (winS == 0)
       {
@@ -771,8 +781,8 @@ void printW()
     //Winner with # of turns Player/AI for X
     if (pTurn == true)
     {
-      fill(0);
-      stroke(0);
+      fill(0, 255, 0);
+      stroke(20);
       textSize(50);
       text("Can you try a little \nharder next game?\n"+"AI won in "+turns+" turns", width/3 + 60, height/3);
       // lose.trigger();
@@ -783,10 +793,11 @@ void printW()
       }
     } else
     {
-      fill(0);
-      stroke(0);
+      fill(0, 255, 0);
+      stroke(20);
       textSize(50);
       text("Player O wins the game!\n"+"          Turns: "+turns, width/3 + 60, height/3);
+      
 
       if (winS == 0)
       {
@@ -799,17 +810,18 @@ void printW()
   if (game == 1 || game == 2)
   {
 
-    fill(0);
-    stroke(0);
+    fill(0, 255, 0);
+    stroke(20);
     textSize(50);
     text("Press Enter to play again, Space to go back, or e to exit!", (width/4) - 150, height-100);
+    
   }
 
   if (game == 0 && sLeft == 0)
   {
 
-    fill(0);
-    stroke(0);
+    fill(0, 255, 0);
+    stroke(20);
     textSize(50);
     text("It's a tie game!", width/3 + 100, height/3);
     text("Press Enter to play again, Space to go back, or e to exit!", (width/4) - 150, height-100);
@@ -842,7 +854,7 @@ void keyPressed()
           game = 0;
           sLeft = 9;
           turns = 0;
-          winS=0;
+          winS = 0;
         }
       }
       first = random(0, 100);
