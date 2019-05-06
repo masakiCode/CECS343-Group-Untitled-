@@ -51,7 +51,7 @@ void setup()
   sound = true;
   smooth();
   img = loadImage("warn.png");
-  hImg = loadImage("hint.png");
+  hImg = loadImage("hint.jpg");
   bImg = loadImage("blank.jpg");
   
   
@@ -756,10 +756,12 @@ void printW()
       stroke(20);
       textSize(50);
       text("Can you try a little \nharder next game?\n"+"AI won in "+turns+" turns", width/3 + 60, height/3);
+      moveStack.clear();
       if (winS == 0)
       {
         //lose.trigger();
         winS++;
+        moveStack.clear();
       }
     } else
     {
@@ -767,12 +769,13 @@ void printW()
       stroke(20);
       textSize(50);
       text("Player X wins the game!\n"+"          Turns: "+turns, width/3 + 60, height/3);
-      
+      moveStack.clear();
 
       if (winS == 0)
       {
         //v.trigger();
         winS++;
+        moveStack.clear();
       }
     }
   } else if (game == 2)
@@ -786,10 +789,12 @@ void printW()
       textSize(50);
       text("Can you try a little \nharder next game?\n"+"AI won in "+turns+" turns", width/3 + 60, height/3);
       // lose.trigger();
+      moveStack.clear();
       if (winS == 0)
       {
         //lose.trigger();
         winS++;
+        moveStack.clear();
       }
     } else
     {
@@ -797,12 +802,13 @@ void printW()
       stroke(20);
       textSize(50);
       text("Player O wins the game!\n"+"          Turns: "+turns, width/3 + 60, height/3);
-      
+      moveStack.clear();
 
       if (winS == 0)
       {
         //v.trigger();
         winS++;
+        moveStack.clear();
       }
     }
   }
@@ -814,7 +820,7 @@ void printW()
     stroke(20);
     textSize(50);
     text("Press Enter to play again, Space to go back, or e to exit!", (width/4) - 150, height-100);
-    
+    moveStack.clear();
   }
 
   if (game == 0 && sLeft == 0)
@@ -825,6 +831,7 @@ void printW()
     textSize(50);
     text("It's a tie game!", width/3 + 100, height/3);
     text("Press Enter to play again, Space to go back, or e to exit!", (width/4) - 150, height-100);
+    moveStack.clear(); 
   }
 }
 
