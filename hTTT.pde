@@ -51,7 +51,7 @@ void setup()
   sound = true;
   smooth();
   img = loadImage("warn.png");
-  hImg = loadImage("hint.jpg");
+  hImg = loadImage("hint.png");
   bImg = loadImage("blank.jpg");
   
   
