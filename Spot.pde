@@ -1,13 +1,22 @@
-
+/* Name: Howard Chen, Matt McFarlane, Scott Arima, Joel Rodriguez
+ * Class: CECS 343
+ * Instructor: Professor Brown
+ * Date: 12 April 2019
+ * Purpose : The purpose of this class is to implement
+ * the Spot feature to the keep track of all the Spots on the board.
+ * It also has spots for the Menu/SubMenu Buttons
+ *
+ */
 class Spot
 {
-   int x;
-   int y;
-   int w;
-   int h; 
-   int chosen = 0;
-   PImage xImg = loadImage("crab.jpg");
+   int x; // spot x coordinates
+   int y; //spot y coordinates
+   int w; // spot x dimensions
+   int h; // spot y dimensions
+   int chosen = 0; //spot picked or not. 0 for untaken, 1 for taken
+   PImage xImg = loadImage("crab.jpg"); 
    PImage oImg = loadImage("bHole.jpg");
+   PImage bImg = loadImage("blank.jpg");
    
    Spot(int newX, int newY, int newW, int newH)
    {
@@ -63,7 +72,8 @@ class Spot
             sLeft--;   
         }
     }
-   
+    
+   //decides which mode to go into
    void decide(int cX, int cY)
    {
      if (cX > x && cX < x+w && cY > y && cY < y+h) 
@@ -116,6 +126,7 @@ class Spot
    void clean()
    {
       chosen = 0; 
+      image(bImg, x, y, w, h);
    }
    
    //Set chosen
@@ -163,4 +174,4 @@ class Spot
          rect(x, y, w, h);
      }
    }
- }  
+ } 
