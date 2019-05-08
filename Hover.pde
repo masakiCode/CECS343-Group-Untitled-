@@ -116,7 +116,6 @@ class Hover
                   if (board[0][0].chosen == cVar && board[1][1].chosen == cVar && board[2][2].chosen == 0) {
                     print("hint:");
                     println("spot 8");
-                    image(hImg, board[0][2].x, board[0][2].y, 100, 100);
                     return 8;
                   }
                   if (board[0][0].chosen == cVar && board[2][2].chosen == cVar && board[1][1].chosen == 0) {
@@ -251,7 +250,6 @@ class Hover
                   if (board[0][0].chosen == cVar && board[1][1].chosen == cVar && board[2][2].chosen == 0) {
                     print("hint:");
                     println("spot 8");
-                    image(hImg, board[0][2].x, board[0][2].y, 100, 100);
                     return 8;
                   }
                   if (board[0][0].chosen == cVar && board[2][2].chosen == cVar && board[1][1].chosen == 0) {
